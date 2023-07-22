@@ -2,8 +2,8 @@ import 'package:http/http.dart' as http; // namespace를 http로 지정
 import 'dart:convert'; // jsonDecode 메서드를 사용하기 위함
 
 import '../models/webtoon_model.dart';
-// import '../models/webtoon_detail_model.dart';
-// import '../models/webtoon_episode_model.dart';
+import '../models/webtoon_detail_model.dart';
+import '../models/webtoon_episode_model.dart';
 
 class ApiService {
   static const String baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
@@ -39,27 +39,27 @@ class ApiService {
   //   throw Error(); // 아니라면 에러 발생
   // }
 
-  // static Future<WebtoonDetailModel> getToonById(String id) async {
-  //     final url = Uri.parse("$baseUrl/$id");
-  //     final response = await http.get(url);
-  //     if(response.statusCode == 200) {
-  //       final webtoon = jsonDecode(response.body);
-  //       return WebtoonDetailModel.fromJson(webtoon);
-  //     }
-  //     throw Error();
-  // }
+  static Future<WebtoonDetailModel> getToonById(String id) async {
+      final url = Uri.parse("$baseUrl/$id");
+      final response = await http.get(url);
+      if(response.statusCode == 200) {
+        final webtoon = jsonDecode(response.body);
+        return WebtoonDetailModel.fromJson(webtoon);
+      }
+      throw Error();
+  }
 
-  // static Future<List<WebtoonEpisodeModel>> getLatestEpisodesById(String id) async {
-  //     List<WebtoonEpisodeModel> episodesInstances = [];
-  //   final url = Uri.parse("$baseUrl/$id/episodes");
-  //   final response = await http.get(url);
-  //   if(response.statusCode == 200) {
-  //     final episodes = jsonDecode(response.body);
-  //     for(var episode in episodes) {
-  //       episodesInstances.add(WebtoonEpisodeModel.fromJson(episode));
-  //     }
-  //     return episodesInstances;
-  //   }
-  //   throw Error();
-  // }
+  static Future<List<WebtoonEpisodeModel>> getLatestEpisodesById(String id) async {
+    List<WebtoonEpisodeModel> episodesInstances = [];
+    final url = Uri.parse("$baseUrl/$id/episodes");
+    final response = await http.get(url);
+    if(response.statusCode == 200) {
+      final episodes = jsonDecode(response.body);
+      for(var episode in episodes) {
+        episodesInstances.add(WebtoonEpisodeModel.fromJson(episode));
+      }
+      return episodesInstances;
+    }
+    throw Error();
+  }
 }
